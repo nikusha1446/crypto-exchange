@@ -1,1 +1,80 @@
 /* You can add global styles to this file, and also import other style files */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Gabarito', sans-serif;
+    background-color: #000;
+    color: #fff;
+    font-size: 15px;
+}
+
+input, 
+textarea, 
+select { 
+    font-family:inherit;
+    font-size: 15px;
+}
+
+// ---
+// BUTTONS
+// ---
+
+button {
+    padding: 7px 10px;
+    border: none;
+    border-radius: 100px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+
+    &:disabled {
+        cursor: default;
+        &:hover {
+            box-shadow: none;
+        }
+        opacity: 0.5;
+    }
+}
+
+.btn-primary-light {
+    background-color: rgb(191 219 254);
+    color: rgb(12 74 110);
+}
+
+.btn-primary-dark {
+    background-color: rgb(37 99 235);
+    color: rgb(255, 255, 255);
+    transition: all 0.2s;
+
+    &:hover {
+        transition: all 0.2s;
+        box-shadow: rgb(37 99 235) 0px 0px 16px 0px;
+    }
+}
+
+.btn-large {
+    padding: 12px 50px;
+    font-size: 18px;
+}
+
+// ---
+// INPUTS
+// ---
+
+input {
+    padding: 12px 12px;
+    border-radius: 20px;
+    background-color: transparent;
+    color: rgb(255, 255, 255);
+    border: 1px solid red;
+
+    &:focus {
+        outline: none;
+    }
+}

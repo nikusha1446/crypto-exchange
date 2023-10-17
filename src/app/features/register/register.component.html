@@ -1,0 +1,28 @@
+<div class="overlay"></div>
+<div class="register">
+    <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
+        <label>
+            Email <br>
+            <input 
+            formControlName="email"
+            type="text">
+        </label>
+        <label>
+            Password <br>
+            <input 
+            formControlName="password"
+            type="password">
+        </label>
+        <label>
+            Repeat Password <br>
+            <input 
+            formControlName="repeat-password"
+            type="password">
+        </label>
+        <button
+        [disabled]="!registerForm.valid"
+        type="submit"
+        class="btn-primary-dark btn-large">Register</button>
+    </form>
+</div>
+<p>Already have an account? <a routerLink="/login">Login</a></p>

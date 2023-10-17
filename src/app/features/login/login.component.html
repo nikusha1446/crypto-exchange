@@ -1,0 +1,21 @@
+<div class="overlay"></div>
+<div class="login">
+    <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+        <label>
+            Email <br>
+            <input 
+            formControlName="email"
+            type="text">
+        </label>
+        <label>
+            Password <br>
+            <input 
+            formControlName="password"
+            type="password">
+        </label>
+        <button 
+        type="submit"
+        class="btn-primary-dark btn-large">Login</button>
+    </form>
+</div>
+<p>Don't have an account? <a routerLink="/register">Register</a></p>
