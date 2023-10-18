@@ -13,9 +13,11 @@
             formControlName="password"
             type="password">
         </label>
-        <button 
+        <button
+        [disabled]="!loginForm.valid"
         type="submit"
         class="btn-primary-dark btn-large">Login</button>
     </form>
 </div>
 <p>Don't have an account? <a routerLink="/register">Register</a></p>
+<button (click)="onCheck()">check user</button>

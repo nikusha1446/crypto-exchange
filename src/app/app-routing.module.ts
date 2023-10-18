@@ -13,6 +13,10 @@ const routes: Routes = [
   {
     path: 'register',
     loadComponent: () => import('./features/register/register.component').then((mod) => mod.RegisterComponent)
+  },
+  {
+    path: 'dashboard',
+    loadComponent: () => import('./features/dashboard/dashboard.component').then((mod) => mod.DashboardComponent)
   }
 ];
 

@@ -2,6 +2,12 @@
 <div class="register">
     <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
         <label>
+            Username <br>
+            <input 
+            formControlName="username"
+            type="text">
+        </label>
+        <label>
             Email <br>
             <input 
             formControlName="email"

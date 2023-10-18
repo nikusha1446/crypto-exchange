@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { passwordMatchValidator } from './validators/password.validator';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   standalone: true,
@@ -14,8 +15,9 @@ import { passwordMatchValidator } from './validators/password.validator';
 export class RegisterComponent {
   registerForm: FormGroup;
 
-  constructor() {
+  constructor(private authService: AuthService) {
     this.registerForm = new FormGroup({
+      'username': new FormControl(null, [Validators.required, Validators.minLength(4)]),
       'email': new FormControl(null, [Validators.required, Validators.email]),
       'password': new FormControl(null, [Validators.required, Validators.minLength(4)]),
       'repeat-password': new FormControl(null),
@@ -25,9 +27,9 @@ export class RegisterComponent {
   }
 
   onRegister() {
-    console.log(this.registerForm);
+    const username = this.registerForm.get('username')?.value;
     const email = this.registerForm.get('email')?.value;
     const password = this.registerForm.get('password')?.value;
-    console.log(email, password);
+    this.authService.registerUser(username, email, password).subscribe();
   }
 }
