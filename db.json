@@ -5,6 +5,42 @@
       "email": "nikusha@gmail.com",
       "password": "nikusha123",
       "id": 1
+    },
+    {
+      "username": "Nikusha",
+      "email": "n@gmail.com",
+      "password": "n123",
+      "id": 2
+    },
+    {
+      "username": "taki",
+      "email": "taki@gmail.com",
+      "password": "taki123",
+      "id": 3
+    },
+    {
+      "username": "taki",
+      "email": "taki2@gmail.com",
+      "password": "taki123",
+      "id": 4
+    },
+    {
+      "username": "taki",
+      "email": "taki3@gmail.com",
+      "password": "taki123",
+      "id": 5
+    },
+    {
+      "username": "nikusha",
+      "email": "nikushaa@gmail.com",
+      "password": "1234",
+      "id": 6
+    },
+    {
+      "username": "nikusha",
+      "email": "nikusha1334@gmail.com",
+      "password": "nikusha123",
+      "id": 7
     }
   ]
 }

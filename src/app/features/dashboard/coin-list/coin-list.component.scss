@@ -1,0 +1,49 @@
+.coin-list {
+    padding: 35px 0 0 50px;
+    width: 100%;
+
+    table {
+        font-size: 16px;
+        margin-bottom: 30px;
+        width: 900px;
+
+        thead {
+            color: #7c7c7c;
+
+        }
+
+        img {
+            width: 32px;
+            height: 32px;
+            margin-right: 10px;
+        }
+    
+        td {
+            padding: 10px;
+            margin: 0;
+
+            &.coin-index {
+                color: #7c7c7c;
+            }
+    
+            &.td-flex {
+                display: flex;
+                align-items: center;
+            }
+    
+            span {
+                color: #7c7c7c;
+                margin-left: 10px;
+            }
+
+            &.red {
+                color: rgb(244 63 94);
+            }
+
+            &.green {
+                color: rgb(52 211 153);
+            }
+        }
+    }
+}
+

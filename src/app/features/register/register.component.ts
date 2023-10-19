@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { passwordMatchValidator } from './validators/password.validator';
 import { AuthService } from 'src/app/core/services/auth.service';
 
@@ -15,7 +15,9 @@ import { AuthService } from 'src/app/core/services/auth.service';
 export class RegisterComponent {
   registerForm: FormGroup;
 
-  constructor(private authService: AuthService) {
+  constructor(
+    private authService: AuthService,
+    private router: Router) {
     this.registerForm = new FormGroup({
       'username': new FormControl(null, [Validators.required, Validators.minLength(4)]),
       'email': new FormControl(null, [Validators.required, Validators.email]),
@@ -30,6 +32,8 @@ export class RegisterComponent {
     const username = this.registerForm.get('username')?.value;
     const email = this.registerForm.get('email')?.value;
     const password = this.registerForm.get('password')?.value;
-    this.authService.registerUser(username, email, password).subscribe();
+    this.authService.registerUser(username, email, password).subscribe(() => {
+      this.router.navigate(['/login']);
+    });
   }
 }
