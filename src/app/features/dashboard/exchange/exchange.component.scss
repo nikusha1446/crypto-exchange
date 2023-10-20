@@ -1,0 +1,34 @@
+.exchange {
+    width: 600px;
+    padding: 35px 0 0 50px;
+
+    form {
+        display: flex;
+        flex-direction: column;
+
+        label {
+            color: #757575;
+        }
+
+        select {
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+            padding: 11px;
+        }
+
+        input {
+            width: 300px;
+            margin-bottom: 20px;
+            margin-top: 10px;
+
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+
+        button {
+            margin-top: 10px;
+            width: fit-content;
+            padding: 14px;
+        }
+    }
+}

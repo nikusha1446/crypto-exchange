@@ -1,0 +1,22 @@
+<div class="exchange">
+    <form (ngSubmit)="onConvert()">
+      <label>
+        You pay: <br>
+        <select [(ngModel)]="payCurrency" (change)="onChangeAmount()" name="payCurrency">
+          <option *ngFor="let coin of supportedCurrencies" [value]="coin.id">{{ coin.name }}</option>
+        </select>
+        <input type="number" [(ngModel)]="amountToPay" (input)="onChangeAmount()" name="amountToPay">
+      </label>
+      <label>
+        You receive: <br>
+        <select [(ngModel)]="receiveCurrency" (change)="onChangeAmount2()" name="receiveCurrency">
+          <option *ngFor="let coin of supportedCurrencies" [value]="coin.id">{{ coin.name }}</option>
+        </select>
+        <input type="number" [(ngModel)]="amountToReceive" (input)="onChangeAmount2()" name="amountToReceive">
+      </label>
+      <button 
+      [disabled]="isInputNegativeOrZero()"
+      class="btn-primary-dark" 
+      type="submit">Convert</button>
+    </form>
+  </div>

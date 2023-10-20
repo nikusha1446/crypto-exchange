@@ -67,12 +67,14 @@ button {
 // INPUTS
 // ---
 
-input {
+input, select {
     padding: 12px 12px;
     border-radius: 20px;
-    background-color: transparent;
+    
     color: rgb(255, 255, 255);
-    border: 1px solid red;
+
+    border: 1px solid #1d1d1d;
+    background-color: #1d1d1d;
 
     &:focus {
         outline: none;

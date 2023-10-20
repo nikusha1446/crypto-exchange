@@ -18,7 +18,20 @@ export class AuthService {
     return this.http.get(checkUserUrl).pipe(
       switchMap((response) => {
         if (Array.isArray(response) && response.length === 0) {
-          const userData: User = { username: username, email: email, password: password };
+          const userData: User = { 
+            username: username, 
+            email: email, 
+            password: password,
+            balance: {
+              'usd-coin': 0,
+              'bitcoin': 0,
+              'ethereum': 0,
+              'binancecoin': 0,
+              'ripple': 0,
+              'solana': 0,
+              'cardano': 0,
+            }
+           };
           return this.http.post<void>('http://localhost:3000/users', userData);
         } else {
           return throwError(() => 'User with this email already exist!');

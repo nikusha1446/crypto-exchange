@@ -16,7 +16,17 @@ const routes: Routes = [
   },
   {
     path: 'dashboard',
-    loadComponent: () => import('./features/dashboard/dashboard.component').then((mod) => mod.DashboardComponent)
+    loadComponent: () => import('./features/dashboard/dashboard.component').then((mod) => mod.DashboardComponent),
+    children: [
+      {
+        path: 'coins',
+        loadComponent: () => import('./features/dashboard/coin-list/coin-list.component').then((mod) => mod.CoinListComponent)
+      },
+      {
+        path: 'exchange',
+        loadComponent: () => import('./features/dashboard/exchange/exchange.component').then((mod) => mod.ExchangeComponent)
+      }
+    ]
   }
 ];
 
