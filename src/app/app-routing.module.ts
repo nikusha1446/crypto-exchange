@@ -19,6 +19,10 @@ const routes: Routes = [
     loadComponent: () => import('./features/dashboard/dashboard.component').then((mod) => mod.DashboardComponent),
     children: [
       {
+        path: 'profile',
+        loadComponent: () => import('./features/dashboard/profile/profile.component').then((mod) => mod.ProfileComponent)
+      },
+      {
         path: 'coins',
         loadComponent: () => import('./features/dashboard/coin-list/coin-list.component').then((mod) => mod.CoinListComponent)
       },

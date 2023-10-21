@@ -15,7 +15,7 @@
         <input type="number" [(ngModel)]="amountToReceive" (input)="onChangeAmount2()" name="amountToReceive">
       </label>
       <button 
-      [disabled]="isInputNegativeOrZero()"
+      [disabled]="isConvertionValid()"
       class="btn-primary-dark" 
       type="submit">Convert</button>
     </form>

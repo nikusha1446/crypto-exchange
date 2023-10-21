@@ -33,4 +33,8 @@ export class BalanceService {
       })
     );
   }
+
+  getCurrentUserBalance(userId: number | undefined) {
+    return this.http.get(`http://localhost:3000/users/${userId}`)
+  }
 }

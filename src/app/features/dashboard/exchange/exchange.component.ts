@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { User } from 'src/app/core/interfaces/user';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { Balance } from 'src/app/shared/interfaces/balance';
 import { BalanceService } from 'src/app/shared/services/balance.service';
@@ -55,21 +56,32 @@ export class ExchangeComponent {
     }
   }
 
-  isInputNegativeOrZero() {
-    return this.amountToPay <= 0 || this.amountToReceive <= 0;
+  isConvertionValid() {
+    return this.amountToPay <= 0 || this.amountToReceive <= 0 || this.payCurrency === this.receiveCurrency;
   }
 
   onConvert() {
+    const currentUser = this.authService.getCurrentUser();
     this.cryptoBalance = {
       [this.payCurrency]: this.amountToPay * -1,
       [this.receiveCurrency]: this.amountToReceive,
+    };
+  
+    if (currentUser) {
+      this.balanceService.getCurrentUserBalance(currentUser.id).subscribe((data) => {
+        const userData = data as User
+        if (userData.balance) {
+          const payCurrencyAmount = userData.balance[this.payCurrency as keyof typeof currentUser.balance];
+          if (payCurrencyAmount < this.amountToPay) {
+            console.log(`You don't have enough ${this.payCurrency}`);
+          } else {
+            this.balanceService.changeUserBalance(currentUser.id, this.cryptoBalance).subscribe(data => {
+              console.log(data);
+            });
+          }
+        }
+      });
     }
-
-    this.balanceService.changeUserBalance(
-      this.authService.getCurrentUser()?.id,
-      this.cryptoBalance).subscribe(data => {
-      console.log(data);
-    })
   }
 
 }
