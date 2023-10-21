@@ -27,6 +27,9 @@ export class ExchangeComponent {
     {'id': 'cardano', 'name': 'Cardano'}
   ];
 
+  activeSection: string = 'deposit';
+  fiatValue: number = 0;
+
   payCurrency: string = 'usd-coin';
   receiveCurrency: string = 'bitcoin';
   amountToPay: number = 0;
@@ -36,6 +39,17 @@ export class ExchangeComponent {
   constructor(private authService: AuthService,
     private balanceService: BalanceService) {
 
+  }
+
+  onDeposit() {
+    const currentUser = this.authService.getCurrentUser();
+
+    if(currentUser) {
+      this.balanceService.depositUSD(currentUser.id, this.fiatValue).subscribe(data => {
+        console.log(data);
+      })
+    }
+    
   }
 
   onChangeAmount() {

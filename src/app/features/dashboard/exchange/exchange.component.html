@@ -1,4 +1,37 @@
 <div class="exchange">
+  <nav>
+    <ul>
+      <li 
+      [class.active]="activeSection === 'deposit'"
+      (click)="activeSection = 'deposit'"
+      >
+        <a>Deposit</a>
+      </li>
+      <li 
+      [class.active]="activeSection === 'trade'"
+      (click)="activeSection = 'trade'"
+      >
+        <a>Trade</a>
+      </li>
+    </ul>
+  </nav>
+
+  <div class="deposit" *ngIf="activeSection === 'deposit'">
+    <p>Your fiat will be converted into USDC <br> Minimum deposit is $20</p>
+    <form (ngSubmit)="onDeposit()">
+      <label>
+        US dollars: <br>
+        <input [(ngModel)]="fiatValue" type="number" name="fiatValue">
+      </label>
+      <button 
+      class="btn-primary-dark"
+      type="submit"
+      [disabled]="fiatValue < 20">Deposit</button>
+    </form>
+  </div>
+
+  <div class="trade" *ngIf="activeSection === 'trade'">
+    <p>Trade our supported cryptocurrencies!</p>
     <form (ngSubmit)="onConvert()">
       <label>
         You pay: <br>
@@ -20,3 +53,6 @@
       type="submit">Convert</button>
     </form>
   </div>
+  
+  
+</div>

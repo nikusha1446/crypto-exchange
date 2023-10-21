@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Balance } from '../interfaces/balance';
-import { switchMap } from 'rxjs';
+import { mergeMap, switchMap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -36,5 +36,25 @@ export class BalanceService {
 
   getCurrentUserBalance(userId: number | undefined) {
     return this.http.get(`http://localhost:3000/users/${userId}`)
+  }
+
+  depositUSD(userId: number | undefined, value: number) {
+    const userUrl = `http://localhost:3000/users/${userId}`;
+
+    return this.http.get(userUrl).pipe(
+      mergeMap((userData: any) => {
+        const mergedBalance = { ...userData.balance };
+
+        if (mergedBalance.hasOwnProperty('usd-coin')) {
+          mergedBalance['usd-coin'] += value;
+        } else {
+          mergedBalance['usd-coin'] = value;
+        }
+
+        const patchData = { balance: mergedBalance };
+
+        return this.http.patch(userUrl, patchData);
+      })
+    );
   }
 }

@@ -28,7 +28,7 @@ export class LoginComponent {
     const email = this.loginForm.get('email')?.value;
     const password = this.loginForm.get('password')?.value;
     this.authService.loginUser(email, password).subscribe(() => {
-      this.router.navigate(['/dashboard']);
+      this.router.navigate(['/dashboard/profile']);
     });
     
   }
