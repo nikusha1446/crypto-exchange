@@ -1,0 +1,24 @@
+<div class="send">
+    <form [formGroup]="sendForm" (ngSubmit)="onSend()">
+        <label>
+            Asset: <br>
+            <select formControlName="asset">
+                <option
+                *ngFor="let coin of currencies" [value]="coin.id"
+                >{{ coin.name }}</option>
+            </select>
+        </label>
+        <label>
+            Send to: <br>
+            <input type="text" placeholder="user@gmail.com" formControlName="email">
+        </label>
+        <label>
+            Amount: <br>
+            <input type="number" formControlName="amount">
+        </label>
+        <button
+        [disabled]="!sendForm.valid"
+        class="btn-primary-dark"
+        type="submit">Send</button>
+    </form>
+</div>

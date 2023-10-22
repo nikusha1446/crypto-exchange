@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
@@ -11,7 +12,8 @@ import { AuthService } from 'src/app/core/services/auth.service';
   imports: [RouterModule, ReactiveFormsModule],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LoginComponent {
+export class LoginComponent implements OnDestroy {
+  private subscription: Subscription | undefined;
   loginForm: FormGroup;
 
   constructor(
@@ -27,7 +29,7 @@ export class LoginComponent {
   onLogin() {
     const email = this.loginForm.get('email')?.value;
     const password = this.loginForm.get('password')?.value;
-    this.authService.loginUser(email, password).subscribe(() => {
+    this.subscription = this.authService.loginUser(email, password).subscribe(() => {
       this.router.navigate(['/dashboard/profile']);
     });
     
@@ -35,6 +37,10 @@ export class LoginComponent {
 
   onCheck() {
     console.log(this.authService.getCurrentUser());
+  }
+
+  ngOnDestroy(): void {
+    this.subscription?.unsubscribe();
   }
 
 }

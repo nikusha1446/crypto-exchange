@@ -29,6 +29,10 @@ const routes: Routes = [
       {
         path: 'exchange',
         loadComponent: () => import('./features/dashboard/exchange/exchange.component').then((mod) => mod.ExchangeComponent)
+      },
+      {
+        path: 'send',
+        loadComponent: () => import('./features/dashboard/send/send.component').then((mod) => mod.SendComponent)
       }
     ]
   }

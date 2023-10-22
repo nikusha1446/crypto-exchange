@@ -1,30 +1,11 @@
 <div class="profile">
     <div class="crypto-balance">
-        <div class="crypto-box bitcoin">
-            <h3>Bitcoin</h3>
-            <p>0.003 BTC</p>            
-            <span>$403</span>
-        </div>
-        <div class="crypto-box ethereum">
-            <h3>Ethereum</h3>
-            <p>0.03 ETH</p>
-            <span>$403</span>
-        </div>
-        <div class="crypto-box bnb">
-            <h3>BNB</h3>
-            <p>0.03 BNB</p>
-            <span>$403</span>
-        </div>
-        <div class="crypto-box xrp">
-            <h3>XRP</h3>
-            <p>0.03 XRP</p>
-            <span>$403</span>
-        </div>
-        <div class="crypto-box solana">
-            <h3>Solana</h3>
-            <p>0.03 Solana</p>
-            <span>$403</span>
-        </div>
+        <ng-container *ngFor="let item of cryptoBalance | keyvalue">
+            <div *ngIf="item.value !== 0" class="crypto-box">
+                <h3>{{ getName(item.key) }}</h3>
+                <p>{{ item.value | number:'1.2-2' }} {{ getTicker(item.key) }}</p>
+            </div>
+        </ng-container>
     </div>
 
     <div class="transactions buy">

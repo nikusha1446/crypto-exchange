@@ -11,6 +11,13 @@
             position: relative;
             width: fit-content;
 
+            &.active {
+                &::before {
+                    left: -17px;
+                    opacity: 1;
+                }
+            }
+
             &::before {
                 content: '';
                 display: block;

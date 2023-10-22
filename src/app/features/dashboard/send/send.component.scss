@@ -1,0 +1,30 @@
+.send {
+    padding: 45px 0 0 40px;
+    width: 100%;
+
+    form {
+        display: flex;
+        flex-direction: column;
+
+        label {
+            color: #757575;
+        }
+
+        input {
+            width: 300px;
+            margin-bottom: 20px;
+            margin-top: 10px;
+        }
+
+        select {
+            margin-bottom: 20px;
+            margin-top: 10px;
+        }
+
+        button {
+            margin-top: 10px;
+            width: fit-content;
+            padding: 14px;
+        }
+    }
+}

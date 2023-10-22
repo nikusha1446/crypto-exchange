@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Balance } from '../interfaces/balance';
-import { mergeMap, switchMap } from 'rxjs';
+import { Observable, map, mergeMap, switchMap } from 'rxjs';
+import { User } from 'src/app/core/interfaces/user';
 
 @Injectable({
   providedIn: 'root'
@@ -56,5 +57,19 @@ export class BalanceService {
         return this.http.patch(userUrl, patchData);
       })
     );
+  }
+
+  getUsers(): Observable<User[]> {
+    return this.http.get<[]>('http://localhost:3000/users');
+  }
+
+  findUserWithEmail(email: string): Observable<number | null | undefined> {
+    return this.getUsers().pipe(
+      map((users) => {
+        const user = users.find((u) => u.email === email);
+        return user ? user.id : null;
+      })
+    );
+
   }
 }
