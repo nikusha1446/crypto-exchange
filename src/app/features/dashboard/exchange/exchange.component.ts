@@ -6,6 +6,7 @@ import { User } from 'src/app/core/interfaces/user';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { Balance } from 'src/app/shared/interfaces/balance';
 import { BalanceService } from 'src/app/shared/services/balance.service';
+import { TransactionsService } from 'src/app/shared/services/transactions.service';
 
 @Component({
   standalone: true,
@@ -42,7 +43,8 @@ export class ExchangeComponent implements OnDestroy {
   cryptoBalance: Balance = {};
 
   constructor(private authService: AuthService,
-    private balanceService: BalanceService) {
+    private balanceService: BalanceService,
+    private transactionService: TransactionsService) {
 
   }
 
@@ -85,6 +87,14 @@ export class ExchangeComponent implements OnDestroy {
       [this.payCurrency]: this.amountToPay * -1,
       [this.receiveCurrency]: this.amountToReceive,
     };
+
+    const transaction = {
+      userId: currentUser?.id,
+      fromCurrency: this.payCurrency,
+      toCurrency: this.receiveCurrency,
+      amountFrom: this.amountToPay,
+      amountTo: this.amountToReceive
+    }
   
     if (currentUser) {
       this.getBalanceSubscription = this.balanceService.getCurrentUserBalance(currentUser.id).subscribe((data) => {
@@ -97,6 +107,12 @@ export class ExchangeComponent implements OnDestroy {
             this.changeBalanceSubscription = this.balanceService.changeUserBalance(currentUser.id, this.cryptoBalance).subscribe(data => {
               console.log(data);
             });
+
+            this.transactionService.createTransaction(transaction).subscribe(data => {
+              console.log(data);
+              
+            })
+
           }
         }
       });

@@ -14,20 +14,17 @@
             <thead>
                 <tr>
                     <td>Buy</td>
+                    <td>Amount</td>
                     <td>Sell</td>
                     <td>Amount</td>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>USDC</td>
-                    <td>Bitcoin</td>
-                    <td>$300</td>
-                </tr>
-                <tr>
-                    <td>Ethereum</td>
-                    <td>Solana</td>
-                    <td>$2,120</td>
+                <tr *ngFor="let transaction of transactions">
+                    <td>{{ getTicker(transaction.toCurrency) }}</td>
+                    <td>+{{ transaction.amountTo | number:'1.2-2' }}</td>
+                    <td>{{ getTicker(transaction.fromCurrency) }}</td>
+                    <td>-{{ transaction.amountFrom | number:'1.2-2' }}</td>
                 </tr>
             </tbody>
         </table>
@@ -44,15 +41,10 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Bitcoin</td>
-                    <td>$300</td>
-                    <td>nikusha@gmail.com</td>
-                </tr>
-                <tr>
-                    <td>Solana</td>
-                    <td>$400</td>
-                    <td>nikusha@gmail.com</td>
+                <tr  *ngFor="let transaction of sentTransactions">
+                    <td>{{ getTicker(transaction.currency) }}</td>
+                    <td>{{ transaction.amount | number:'1.2-2' }}</td>
+                    <td>{{ transaction.toEmail }}</td>
                 </tr>
             </tbody>
         </table>

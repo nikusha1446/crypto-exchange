@@ -4,6 +4,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { User } from 'src/app/core/interfaces/user';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { BalanceService } from 'src/app/shared/services/balance.service';
+import { TransactionsService } from 'src/app/shared/services/transactions.service';
 
 @Component({
   standalone: true,
@@ -27,7 +28,8 @@ export class SendComponent {
 
   constructor(
     private authService: AuthService,
-    private balanceService: BalanceService) {
+    private balanceService: BalanceService,
+    private transactionsService: TransactionsService ) {
     this.sendForm = new FormGroup({
       'asset': new FormControl('usd-coin', Validators.required),
       'email': new FormControl(null, [Validators.required, Validators.email]),
@@ -42,7 +44,14 @@ export class SendComponent {
     const negativeBalance = { [asset]: value };
     const positiveBalance = { [asset]: value * -1 };
 
-    const currentUser = this.authService.getCurrentUser()
+    const currentUser = this.authService.getCurrentUser();
+
+    const sentTransaction = {
+      userId: currentUser?.id,
+      currency: asset,
+      amount: value * -1,
+      toEmail: email
+    }
 
     if (currentUser) {
       this.balanceService.getCurrentUserBalance(currentUser.id).subscribe((data) => {
@@ -60,6 +69,12 @@ export class SendComponent {
                     console.log(data);
                   });
                 })
+
+                this.transactionsService.createSentTransaction(sentTransaction).subscribe(data => {
+                  console.log(data);
+                  
+                })
+                
               } else {
                 console.log('No user found with this mail!');
                 
