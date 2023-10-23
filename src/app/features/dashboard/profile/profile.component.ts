@@ -21,6 +21,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   cryptoBalance: Balance = {};
   transactions: Transaction[] = [];
   sentTransactions: Sent[] = [];
+  hasCryptoBalance: Boolean = false;
 
   constructor(
     private authService: AuthService,
@@ -35,6 +36,13 @@ export class ProfileComponent implements OnInit, OnDestroy {
         const userData = data as User;
         if(userData.balance) {
           this.cryptoBalance = userData.balance;
+
+          for (const key in this.cryptoBalance) {
+            if (this.cryptoBalance.hasOwnProperty(key) && this.cryptoBalance[key]! > 0) {
+              this.hasCryptoBalance = true;
+            }
+          }
+          
           console.log(this.cryptoBalance);
           this.cdr.detectChanges();
         }

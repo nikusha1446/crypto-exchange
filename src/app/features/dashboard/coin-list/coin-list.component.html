@@ -12,12 +12,12 @@
         <tbody>
             <tr *ngFor="let coin of coinList; let i = index">
                 <td class="coin-index">{{ i + 1 }}</td>
-                <td class="td-flex"><img [src]="coin.image" alt="">  {{ coin.name }} <span>{{ coin.symbol.toUpperCase() }}</span></td>
+                <td class="td-flex"><img [src]="coin.image" alt="">  {{ coin.name }} <span>{{ coin.symbol?.toUpperCase() }}</span></td>
                 <td>${{ coin.current_price | number }}</td>
                 <td
                 [ngClass]="{
-                    'red': coin.price_change_percentage_24h < 0,
-                    'green': coin.price_change_percentage_24h > 0
+                    'red': coin.price_change_percentage_24h ? coin.price_change_percentage_24h < 0 : false,
+                    'green': coin.price_change_percentage_24h ? coin.price_change_percentage_24h > 0 : false
                   }"
                 >{{ coin.price_change_percentage_24h | number:'1.2-2' }}%</td>
                 <td>${{ coin.market_cap | number }}</td>

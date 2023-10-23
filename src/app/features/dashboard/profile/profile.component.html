@@ -6,11 +6,16 @@
                 <p>{{ item.value | number:'1.2-2' }} {{ getTicker(item.key) }}</p>
             </div>
         </ng-container>
+        <div class="crypto-box" *ngIf="!hasCryptoBalance">
+            <h3>Coins</h3>
+            <p>You have 0 coins</p>
+        </div>
     </div>
 
     <div class="transactions buy">
         <h2>Market history</h2>
-        <table>
+        <p class="info-p" *ngIf="transactions.length === 0">You have no transactions</p>
+        <table *ngIf="transactions.length > 0">
             <thead>
                 <tr>
                     <td>Buy</td>
@@ -32,7 +37,8 @@
 
     <div class="transactions send">
         <h2>Sent history</h2>
-        <table>
+        <p class="info-p" *ngIf="sentTransactions.length === 0">You have no transactions</p>
+        <table *ngIf="sentTransactions.length > 0">
             <thead>
                 <tr>
                     <td>Crypto</td>
