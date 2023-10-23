@@ -17,7 +17,7 @@ export interface Httpdata {
     market_cap_change_24h: number | null,
     market_cap_change_percentage_24h: number | null,
     market_cap_rank: number | null,
-    max_supply: number | null | null,
+    max_supply: number | null,
     name: string | null,
     price_change_24h: number | null,
     price_change_percentage_24h: number | null,

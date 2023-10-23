@@ -21,6 +21,7 @@ import { TransactionsService } from 'src/app/shared/services/transactions.servic
 export class ExchangeComponent implements OnInit, OnDestroy {
   coinList: Httpdata[] = [];
 
+  private coinListSubscription: Subscription | undefined;
   private depositSubscription: Subscription | undefined;
   private getBalanceSubscription: Subscription | undefined;
   private changeBalanceSubscription: Subscription | undefined;
@@ -52,7 +53,7 @@ export class ExchangeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.coinService.getCoinList().subscribe((data) => {
+    this.coinListSubscription = this.coinService.getCoinList().subscribe((data) => {
       console.log(data);
       this.coinList = data;
     })
@@ -130,6 +131,7 @@ export class ExchangeComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.coinListSubscription?.unsubscribe();
     this.depositSubscription?.unsubscribe();
     this.getBalanceSubscription?.unsubscribe();
     this.changeBalanceSubscription?.unsubscribe();

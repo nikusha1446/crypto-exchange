@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
 import { User } from 'src/app/core/interfaces/user';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { BalanceService } from 'src/app/shared/services/balance.service';
@@ -14,7 +15,12 @@ import { TransactionsService } from 'src/app/shared/services/transactions.servic
   imports: [ReactiveFormsModule, CommonModule],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SendComponent {
+export class SendComponent implements OnDestroy {
+  private balanceSubscription: Subscription | undefined;
+  private emailSubscription: Subscription | undefined;
+  private changeBalanceSubscription: Subscription | undefined;
+  private changeBalance2Subscription: Subscription | undefined;
+  private sentSubscription: Subscription | undefined;
   sendForm: FormGroup;
   currencies: {id: string, name: string}[] = [
     {'id': 'usd-coin', 'name': 'USDC'},
@@ -54,7 +60,7 @@ export class SendComponent {
     }
 
     if (currentUser) {
-      this.balanceService.getCurrentUserBalance(currentUser.id).subscribe((data) => {
+      this.balanceSubscription = this.balanceService.getCurrentUserBalance(currentUser.id).subscribe((data) => {
         const userData = data as User
         if (userData.balance) {
           const payCurrency = userData.balance[asset as keyof typeof currentUser.balance];
@@ -62,15 +68,15 @@ export class SendComponent {
             console.log(`You don't have enough ${asset}`);
           } else {
 
-            this.balanceService.findUserWithEmail(email).subscribe(data => {
+            this.emailSubscription = this.balanceService.findUserWithEmail(email).subscribe(data => {
               if(data) {
-                this.balanceService.changeUserBalance(data, positiveBalance).subscribe(data => {
-                  this.balanceService.changeUserBalance(currentUser?.id, negativeBalance).subscribe(data => {
+                this.changeBalanceSubscription = this.balanceService.changeUserBalance(data, positiveBalance).subscribe(data => {
+                  this.changeBalance2Subscription = this.balanceService.changeUserBalance(currentUser?.id, negativeBalance).subscribe(data => {
                     console.log(data);
                   });
                 })
 
-                this.transactionsService.createSentTransaction(sentTransaction).subscribe(data => {
+                this.sentSubscription = this.transactionsService.createSentTransaction(sentTransaction).subscribe(data => {
                   console.log(data);
                   
                 })
@@ -84,5 +90,13 @@ export class SendComponent {
         }
       });
     }
+  }
+
+  ngOnDestroy() {
+    this.balanceSubscription?.unsubscribe();
+    this.emailSubscription?.unsubscribe();
+    this.changeBalanceSubscription?.unsubscribe();
+    this.changeBalance2Subscription?.unsubscribe();
+    this.sentSubscription?.unsubscribe();
   }
 }

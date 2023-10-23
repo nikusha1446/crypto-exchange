@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { User } from 'src/app/core/interfaces/user';
 import { AuthService } from 'src/app/core/services/auth.service';
 
@@ -12,7 +13,8 @@ import { AuthService } from 'src/app/core/services/auth.service';
   imports: [RouterModule, CommonModule],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnDestroy {
+  private subscription: Subscription | undefined;
   loggedUser: User | null = null;
 
   constructor(private authService: AuthService,
@@ -20,7 +22,7 @@ export class HeaderComponent {
     private router: Router) {}
 
   ngOnInit() {
-    this.authService.getCurrentUserObservable().subscribe(user => {
+    this.subscription = this.authService.getCurrentUserObservable().subscribe(user => {
       this.loggedUser = user;
       this.cdr.detectChanges();
     });
@@ -33,6 +35,10 @@ export class HeaderComponent {
 
   checkLoggedUser() {
     console.log(this.loggedUser);
+  }
+
+  ngOnDestroy() {
+    this.subscription?.unsubscribe();
   }
 
 }

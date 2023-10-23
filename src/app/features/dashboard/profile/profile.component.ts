@@ -17,7 +17,9 @@ import { TransactionsService } from 'src/app/shared/services/transactions.servic
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProfileComponent implements OnInit, OnDestroy {
-  private subscription: Subscription | undefined;
+  private balanceSubscription: Subscription | undefined;
+  private transactionSubscription: Subscription | undefined;
+  private sentSubscription: Subscription | undefined;
   cryptoBalance: Balance = {};
   transactions: Transaction[] = [];
   sentTransactions: Sent[] = [];
@@ -32,7 +34,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   ngOnInit() {
     const userId = this.authService.getCurrentUser()?.id;
       
-      this.subscription = this.balanceService.getCurrentUserBalance(userId).subscribe(data => {
+      this.balanceSubscription = this.balanceService.getCurrentUserBalance(userId).subscribe(data => {
         const userData = data as User;
         if(userData.balance) {
           this.cryptoBalance = userData.balance;
@@ -49,14 +51,14 @@ export class ProfileComponent implements OnInit, OnDestroy {
       })
 
     if(userId) {
-      this.transactionsService.getTransactionsById(userId).subscribe(data => {
+      this.transactionSubscription = this.transactionsService.getTransactionsById(userId).subscribe(data => {
         // console.log(data);
         this.transactions = data;
         console.log(this.transactions);
         this.cdr.detectChanges();
       })
 
-      this.transactionsService.getSentTransactionsById(userId).subscribe(data => {
+      this.sentSubscription = this.transactionsService.getSentTransactionsById(userId).subscribe(data => {
         // console.log(data);
         this.sentTransactions = data;
         console.log(this.transactions);
@@ -95,7 +97,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscription?.unsubscribe();
+    this.balanceSubscription?.unsubscribe();
+    this.transactionSubscription?.unsubscribe();
+    this.sentSubscription?.unsubscribe();
   }
 
 }
