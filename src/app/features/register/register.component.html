@@ -1,4 +1,15 @@
 <div class="overlay"></div>
+<div 
+    class="alert"
+    *ngIf="alert"
+    [ngClass]="{
+        'success': alert.status === 'success',
+        'error': alert.status === 'error'
+      }">
+    {{ alert.message }}
+    <button (click)="closeError()"><i class="ri-close-line"></i>
+    </button>
+</div>
 <div class="register">
     <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
         <label>

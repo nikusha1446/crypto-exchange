@@ -14,16 +14,25 @@ import { Httpdata } from 'src/app/shared/interfaces/httpdata';
 })
 export class CoinListComponent implements OnInit, OnDestroy {
   private subscription: Subscription | undefined;
+  errorMessage: string = '';
   coinList: Httpdata[] = [];
 
   constructor(private coinService: CoinService,
     private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
-    this.subscription = this.coinService.getCoinList().subscribe((data) => {
-      console.log(data);
-      this.coinList = data;
-      this.cdr.detectChanges();
+    this.subscription = this.coinService.getCoinList().subscribe({
+      next: (data) => {
+        console.log(data);
+        this.coinList = data;
+        this.cdr.detectChanges();
+      },
+      error: error => {
+        this.errorMessage = `Error occured: ${error.name}: ${error.status}`;
+        console.log(error);
+        
+        this.cdr.detectChanges()
+      }
     })
   }
 

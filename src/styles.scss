@@ -22,6 +22,44 @@ select {
 }
 
 // ---
+// ALERT
+// ---
+
+
+.alert {
+    color: #fff;
+    position: absolute;
+    border-radius: 12px;
+    padding: 6px 12px;
+    top: 11px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    button {
+        padding: 5px;
+        font-size: 15px;
+    }
+
+    &.success {
+        background-color: rgb(34 197 94);
+        box-shadow: 2px -2px 44px 0px rgba(34, 197, 94, 0.4);
+        button {
+            background-color: rgb(34 197 94);
+            color: #fff;
+        }
+    }
+
+    &.error {
+        background-color: rgb(244 63 94);
+        box-shadow: 2px -2px 44px 0px rgba(244, 63, 94, 0.4);
+        button {
+            background-color: rgb(244 63 94);
+            color: #fff;
+        }
+    }
+}
+
+// ---
 // BUTTONS
 // ---
 

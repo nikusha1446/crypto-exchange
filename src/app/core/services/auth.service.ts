@@ -45,16 +45,14 @@ export class AuthService {
 
     return this.http.get<User[]>(checkUserUrl).pipe(
       switchMap((response) => {
+        
         if (Array.isArray(response) && response.length === 1) {
           this.currentUser = response[0];
           this.setCurrentUser(this.currentUser);
           return of(this.currentUser);
         } else {
-          return throwError(() => 'Invalid email or password');
+          return throwError(() => 'Wrong email or password');
         }
-      }),
-      catchError(error => {
-        return throwError(() => 'An error occurred while trying to login');
       })
     );
   }

@@ -3,6 +3,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnIni
 import { Subscription } from 'rxjs';
 import { User } from 'src/app/core/interfaces/user';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { Alert } from 'src/app/shared/interfaces/alert';
 import { Balance } from 'src/app/shared/interfaces/balance';
 import { Sent, Transaction } from 'src/app/shared/interfaces/transaction';
 import { BalanceService } from 'src/app/shared/services/balance.service';
@@ -20,6 +21,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   private balanceSubscription: Subscription | undefined;
   private transactionSubscription: Subscription | undefined;
   private sentSubscription: Subscription | undefined;
+  alert: Alert | null = null;
   cryptoBalance: Balance = {};
   transactions: Transaction[] = [];
   sentTransactions: Sent[] = [];
@@ -34,7 +36,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
   ngOnInit() {
     const userId = this.authService.getCurrentUser()?.id;
       
-      this.balanceSubscription = this.balanceService.getCurrentUserBalance(userId).subscribe(data => {
+    this.balanceSubscription = this.balanceService.getCurrentUserBalance(userId).subscribe({
+      next: data => {
         const userData = data as User;
         if(userData.balance) {
           this.cryptoBalance = userData.balance;
@@ -44,28 +47,41 @@ export class ProfileComponent implements OnInit, OnDestroy {
               this.hasCryptoBalance = true;
             }
           }
-          
-          console.log(this.cryptoBalance);
+
           this.cdr.detectChanges();
+
         }
-      })
+      },
+      error: error => {
+        this.alert = {
+          message: error.message,
+          status: 'error'
+        }
+        this.cdr.detectChanges();
+      }
+    })
 
     if(userId) {
-      this.transactionSubscription = this.transactionsService.getTransactionsById(userId).subscribe(data => {
-        // console.log(data);
-        this.transactions = data;
-        console.log(this.transactions);
-        this.cdr.detectChanges();
+      this.transactionSubscription = this.transactionsService.getTransactionsById(userId).subscribe({
+          next: data => {
+          this.transactions = data;
+          this.cdr.detectChanges();
+        },
+          error: error => {
+            console.error(error);
+          }
       })
 
-      this.sentSubscription = this.transactionsService.getSentTransactionsById(userId).subscribe(data => {
-        // console.log(data);
-        this.sentTransactions = data;
-        console.log(this.transactions);
-        this.cdr.detectChanges();
+      this.sentSubscription = this.transactionsService.getSentTransactionsById(userId).subscribe({
+          next: data => {
+          this.sentTransactions = data;
+          this.cdr.detectChanges();
+        },
+          error: error => {
+            console.error(error);
+          }
       })
     }
-
   }
 
   getName(crypto: string): string {
@@ -94,6 +110,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
     };
 
     return cryptoTickers[crypto] || crypto;
+  }
+
+  closeError() {
+    this.alert = null;
   }
 
   ngOnDestroy() {

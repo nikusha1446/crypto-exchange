@@ -22,9 +22,14 @@ export class HeaderComponent implements OnDestroy {
     private router: Router) {}
 
   ngOnInit() {
-    this.subscription = this.authService.getCurrentUserObservable().subscribe(user => {
-      this.loggedUser = user;
-      this.cdr.detectChanges();
+    this.subscription = this.authService.getCurrentUserObservable().subscribe({
+      next: user => {
+        this.loggedUser = user;
+        this.cdr.detectChanges();
+      },
+      error: error => {
+        console.error(error);
+      }
     });
   }
 

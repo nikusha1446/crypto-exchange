@@ -1,4 +1,15 @@
 <div class="overlay"></div>
+<div 
+    class="alert"
+    *ngIf="alert"
+    [ngClass]="{
+        'success': alert.status === 'success',
+        'error': alert.status === 'error'
+      }">
+    {{ alert.message }}
+    <button (click)="closeError()"><i class="ri-close-line"></i>
+    </button>
+</div>
 <div class="login">
     <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
         <label>
@@ -20,4 +31,3 @@
     </form>
 </div>
 <p>Don't have an account? <a routerLink="/register">Register</a></p>
-<!-- <button (click)="onCheck()">check user</button> -->

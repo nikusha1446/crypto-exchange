@@ -1,5 +1,6 @@
 <div class="coin-list">
-    <table>
+    <p *ngIf="errorMessage">{{errorMessage}}</p>
+    <table *ngIf="!errorMessage">
         <thead>
             <tr>
                 <td>#</td>
