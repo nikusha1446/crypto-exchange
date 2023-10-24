@@ -1,22 +1,28 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { authGuard } from './core/guards/auth.guard';
+import { guestGuard } from './core/guards/guest.guard';
 
 const routes: Routes = [
   {
     path: '',
-    loadComponent: () => import('./features/welcome/welcome.component').then((mod) => mod.WelcomeComponent)
+    loadComponent: () => import('./features/welcome/welcome.component').then((mod) => mod.WelcomeComponent),
+    canActivate: [guestGuard]
   },
   {
     path: 'login',
-    loadComponent: () => import('./features/login/login.component').then((mod) => mod.LoginComponent)
+    loadComponent: () => import('./features/login/login.component').then((mod) => mod.LoginComponent),
+    canActivate: [guestGuard]
   },
   {
     path: 'register',
-    loadComponent: () => import('./features/register/register.component').then((mod) => mod.RegisterComponent)
+    loadComponent: () => import('./features/register/register.component').then((mod) => mod.RegisterComponent),
+    canActivate: [guestGuard]
   },
   {
     path: 'dashboard',
     loadComponent: () => import('./features/dashboard/dashboard.component').then((mod) => mod.DashboardComponent),
+    canActivate: [authGuard],
     children: [
       {
         path: 'profile',

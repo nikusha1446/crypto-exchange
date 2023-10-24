@@ -82,7 +82,6 @@ export class SendComponent implements OnDestroy {
                       next: data => {
                         this.changeBalance2Subscription = this.balanceService.changeUserBalance(currentUser?.id, negativeBalance).subscribe({
                           next: data => {
-                            console.log(data);
                           },
                           error: error => {
                             console.error(error);

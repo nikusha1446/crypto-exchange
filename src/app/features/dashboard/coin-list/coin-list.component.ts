@@ -23,7 +23,6 @@ export class CoinListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subscription = this.coinService.getCoinList().subscribe({
       next: (data) => {
-        console.log(data);
         this.coinList = data;
         this.cdr.detectChanges();
       },
