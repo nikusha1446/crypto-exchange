@@ -1,0 +1,73 @@
+.settings {
+    padding: 45px 0 0 40px;
+    width: 100%;
+
+    nav {
+        margin-bottom: 30px;
+        ul {
+            list-style: none;
+            display: flex;
+            gap: 15px;
+
+            li {
+                padding-bottom: 12px;
+                cursor: pointer;
+
+                &.active {
+                    border-bottom: 2px solid rgb(37, 99, 235);
+
+                    a {
+                        color: #fff;
+                    }
+                }
+
+                a {
+                   color: #757575;
+                   text-decoration: none;
+                   font-size: 16px;
+               }
+            }
+
+        }
+    }
+
+    .flex {
+        display: flex;
+        gap: 30px;
+    }
+
+    .image {
+        p {
+            cursor: default;
+            color: #757575;
+            margin-bottom: 10px;
+        }
+
+        img {
+            width: 137px;
+            height: 137px;
+        }
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+
+        label {
+            color: #757575;
+        }
+
+        input {
+            width: 300px;
+            margin-bottom: 20px;
+            margin-top: 10px;
+        }
+
+        button {
+            margin-top: 10px;
+            width: fit-content;
+            padding: 14px;
+        }
+
+    }
+}

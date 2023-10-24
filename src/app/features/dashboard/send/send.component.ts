@@ -70,7 +70,7 @@ export class SendComponent implements OnDestroy {
             const payCurrency = userData.balance[asset as keyof typeof currentUser.balance];
             if (payCurrency < value * -1) {
               this.alert = {
-                message: `You don't have enough ${asset}`,
+                message: `You don't have enough ${this.getTicker(asset)}`,
                 status: 'error'
               }
               this.cdr.detectChanges();

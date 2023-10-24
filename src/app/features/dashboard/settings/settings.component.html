@@ -1,0 +1,89 @@
+<div 
+    class="alert"
+    *ngIf="alert"
+    [ngClass]="{
+        'success': alert.status === 'success',
+        'error': alert.status === 'error'
+      }">
+    {{ alert.message }}
+    <button (click)="closeError()"><i class="ri-close-line"></i>
+    </button>
+</div>
+<div class="settings">
+
+    <nav>
+        <ul>
+          <li 
+          [class.active]="activeSection === 'details'"
+          (click)="activeSection = 'details'"
+          >
+            <a>Details</a>
+          </li>
+          <li 
+          [class.active]="activeSection === 'password'"
+          (click)="activeSection = 'password'"
+          >
+            <a>Change password</a>
+          </li>
+        </ul>
+      </nav>
+
+
+    <div class="flex" *ngIf="activeSection === 'details'">
+        <form [formGroup]="settingsForm" (ngSubmit)="onSubmit()">
+            <label>
+                Avatar URL: <br>
+                <input type="text" formControlName="avatar">
+            </label>
+            <label>
+                Username: <br>
+                <input type="text" formControlName="username">
+            </label>
+            <label>
+                Email: <br>
+                <input type="text" formControlName="email">
+            </label>
+            <label>
+                Password: <br>
+                <input type="password" formControlName="password">
+            </label>
+            <label>
+                Confirm Password: <br>
+                <input type="password" formControlName="repeat-password">
+            </label>
+            <button
+            [disabled]="!settingsForm.valid"
+            class="btn-primary-dark"
+            type="submit">
+                Submit
+            </button>
+        </form>
+        <div class="image">
+            <p>Avatar Preview:</p>
+            <img [src]="settingsForm.value.avatar" alt="Avatar">
+        </div>
+    </div>
+
+
+    <div class="password" *ngIf="activeSection === 'password'">
+        <form [formGroup]="passwordForm" (ngSubmit)="onPasswordChange()">
+            <label>
+                New Password: <br>
+                <input type="password" formControlName="password">
+            </label>
+            <label>
+                Repeat Password: <br>
+                <input type="password" formControlName="repeat-password">
+            </label>
+            <label>
+                Old Password: <br>
+                <input type="password" formControlName="old-password">
+            </label>
+            <button
+            [disabled]="!passwordForm.valid"
+            class="btn-primary-dark"
+            type="submit"
+            >Submit</button>
+        </form>
+    </div>
+</div>

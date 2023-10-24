@@ -33,6 +33,10 @@ const routes: Routes = [
       {
         path: 'send',
         loadComponent: () => import('./features/dashboard/send/send.component').then((mod) => mod.SendComponent)
+      },
+      {
+        path: 'settings',
+        loadComponent: () => import('./features/dashboard/settings/settings.component').then((mod) => mod.SettingsComponent)
       }
     ]
   }
