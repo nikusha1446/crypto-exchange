@@ -22,7 +22,7 @@ const routes: Routes = [
   {
     path: 'dashboard',
     loadComponent: () => import('./features/dashboard/dashboard.component').then((mod) => mod.DashboardComponent),
-    // canActivate: [authGuard],
+    canActivate: [authGuard],
     children: [
       {
         path: 'profile',
