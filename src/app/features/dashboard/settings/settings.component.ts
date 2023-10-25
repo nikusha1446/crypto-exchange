@@ -37,16 +37,12 @@ export class SettingsComponent implements OnInit, OnDestroy {
         
         this.settingsForm = new FormGroup({
           'avatar': new FormControl(this.edittingUser?.avatar, Validators.required),
-          'username': new FormControl(this.edittingUser?.username, Validators.required),
-          'email': new FormControl(this.edittingUser?.email, [Validators.required, Validators.email]),
-          'password': new FormControl(null, Validators.required),
-          'repeat-password': new FormControl(null, Validators.required),
-        },{
-          validators: passwordMatchValidator
+          'username': new FormControl(this.edittingUser?.username, [Validators.required, Validators.minLength(4)]),
+          'email': new FormControl(this.edittingUser?.email, [Validators.required, Validators.email])
         });
 
         this.passwordForm = new FormGroup({
-          'password': new FormControl(null, Validators.required),
+          'password': new FormControl(null, [Validators.required, Validators.minLength(4)]),
           'repeat-password': new FormControl(null, Validators.required),
           'old-password': new FormControl(null, Validators.required),
         },{
@@ -60,7 +56,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    if(this.settingsForm.value.password === this.edittingUser?.password) {
       const data = {
         username: this.settingsForm.value.username,
         email: this.settingsForm.value.email,
@@ -88,12 +83,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
         }
       });
 
-    } else {
-      this.alert = {
-        message: 'Password is incorrect!',
-        status: 'error'
-      }
-    }
   }
 
   onPasswordChange() {

@@ -20,6 +20,10 @@ const routes: Routes = [
     canActivate: [guestGuard]
   },
   {
+    path: 'error',
+    loadComponent: () => import('./shared/error/error.component').then((mod) => mod.ErrorComponent)
+  },
+  {
     path: 'dashboard',
     loadComponent: () => import('./features/dashboard/dashboard.component').then((mod) => mod.DashboardComponent),
     canActivate: [authGuard],
@@ -45,6 +49,13 @@ const routes: Routes = [
         loadComponent: () => import('./features/dashboard/settings/settings.component').then((mod) => mod.SettingsComponent)
       }
     ]
+  },
+  {
+    path: 'error',
+    loadComponent: () => import('./shared/error/error.component').then((mod) => mod.ErrorComponent)
+  },
+  {
+    path: '**', redirectTo: '/error'
   }
 ];
 

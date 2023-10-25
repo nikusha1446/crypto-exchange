@@ -62,6 +62,14 @@ export class ExchangeComponent implements OnInit, OnDestroy {
   onDeposit() {
     const currentUser = this.authService.getCurrentUser();
 
+    if(this.fiatValue > 1000) {
+      this.alert = {
+        message: `You can't deposit more than 1000 USD`,
+        status: 'error'
+      }
+      return;
+    }
+
     if(currentUser) {
       this.depositSubscription = this.balanceService.depositUSD(currentUser.id, this.fiatValue).subscribe({
         next: data => {
@@ -124,7 +132,7 @@ export class ExchangeComponent implements OnInit, OnDestroy {
             const payCurrencyAmount = userData.balance[this.payCurrency as keyof typeof currentUser.balance];
             if (payCurrencyAmount < this.amountToPay) {
               this.alert = {
-                message: `You don't have enough ${this.payCurrency}`,
+                message: `You don't have enough ${this.getTicker(this.payCurrency)}`,
                 status: 'error'
               }
               this.cdr.detectChanges();
@@ -159,6 +167,20 @@ export class ExchangeComponent implements OnInit, OnDestroy {
         }
       });
     }
+  }
+
+  getTicker(crypto: string): string {
+    const cryptoTickers: { [key: string]: string } = {
+      bitcoin: 'BTC',
+      'usd-coin': 'USDC',
+      ethereum: 'ETH',
+      binancecoin: 'BNB',
+      ripple: 'XRP',
+      solana: 'SOL',
+      cardano: 'ADA',
+    };
+
+    return cryptoTickers[crypto] || crypto;
   }
 
   closeError() {
