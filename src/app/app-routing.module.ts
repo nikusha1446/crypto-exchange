@@ -20,13 +20,9 @@ const routes: Routes = [
     canActivate: [guestGuard]
   },
   {
-    path: 'error',
-    loadComponent: () => import('./shared/error/error.component').then((mod) => mod.ErrorComponent)
-  },
-  {
     path: 'dashboard',
     loadComponent: () => import('./features/dashboard/dashboard.component').then((mod) => mod.DashboardComponent),
-    canActivate: [authGuard],
+    // canActivate: [authGuard],
     children: [
       {
         path: 'profile',

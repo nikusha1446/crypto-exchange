@@ -8,3 +8,9 @@
         display: flex;
     }
 }
+
+@media (max-width: 768px) {
+    .container-inner {
+        flex-direction: column;
+    }
+}

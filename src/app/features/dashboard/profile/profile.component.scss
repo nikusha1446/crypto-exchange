@@ -9,6 +9,7 @@
 
     .crypto-balance {
         display: flex;
+        flex-wrap: wrap;
     }
 
     .crypto-box {
@@ -18,7 +19,7 @@
         padding: 20px;
         border-radius: 15px;
         position: relative;
-        margin-bottom: 60px;
+        margin-bottom: 10px;
 
 
         &::before {
@@ -38,6 +39,7 @@
     }
 
     .transactions {
+        margin-top: 60px;
         margin-bottom: 60px;
         h2 {
             padding-left: 12px;
@@ -56,6 +58,18 @@
                 padding: 10px;
                 margin: 0;
             }
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .profile {
+        padding: 0;
+        padding-top: 10px;
+
+        .transactions {
+            margin-top: 40px;
+            margin-bottom: 40px;
         }
     }
 }

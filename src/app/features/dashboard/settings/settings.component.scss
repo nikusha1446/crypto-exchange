@@ -71,3 +71,17 @@
 
     }
 }
+
+@media (max-width: 768px) {
+    .settings {
+        padding: 0;
+        padding-top: 10px;
+
+        .image {
+            img {
+                width: 100px;
+                height: 100px;
+            }
+        }
+    }
+}

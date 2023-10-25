@@ -24,3 +24,19 @@
         font-weight: 400;
     }
 }
+
+@media (max-width: 1100px) { 
+    .welcome {
+        h1 {
+            font-size: 50px;
+        }
+    }
+}
+
+@media (max-width: 768px) { 
+    .welcome {
+        h1 {
+            font-size: 40px;
+        }
+    }
+}

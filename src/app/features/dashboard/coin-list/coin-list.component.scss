@@ -51,3 +51,44 @@
     }
 }
 
+@media (max-width: 1100px) {
+    .coin-list {
+        table {
+            width: 600px;
+            font-size: 14px;
+        }
+    }
+}
+
+@media (max-width: 850px) {
+    .coin-list {
+        table {
+            width: 400px;
+            font-size: 14px;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .coin-list {
+        padding: 0;
+        display: flex;
+        justify-content: center;
+
+        .coin-list-inner {
+            width: 100%;
+        }
+
+        table {
+            width: 100%;
+            font-size: 12px;
+
+            img {
+                width: 15px;
+                height: 15px;
+            }
+        }
+
+    }
+    
+}
